@@ -12,4 +12,11 @@ export const appRoutes: Route[] = [
     loadComponent: () =>
       import('./pages/users/users.component').then((mod) => mod.UsersComponent),
   },
+  {
+    path: `${GT_ROUTES.ENDPOINTS.CATEGORIES}`,
+    loadComponent: () =>
+      import('./pages/categories/categories.component').then(
+        (mod) => mod.CategoriesComponent
+      ),
+  },
 ];

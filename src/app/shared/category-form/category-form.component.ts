@@ -6,32 +6,31 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { Store } from '@ngxs/store';
-import { User } from 'src/app/pages/users/models/users.model';
-import { ModalState } from 'src/app/store/modal/modal.state';
+import { Category } from 'src/app/pages/categories/models/category.model';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { ModalState } from 'src/app/store/modal/modal.state';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-user-form',
+  selector: 'app-category-form',
   standalone: true,
-  imports: [CommonModule, InputTextModule, ReactiveFormsModule],
-  templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.scss',
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule],
+  templateUrl: './category-form.component.html',
+  styleUrl: './category-form.component.scss',
 })
-export class UserFormComponent implements OnInit, OnDestroy {
-  userForm!: FormGroup;
-  user!: User;
+export class CategoryFormComponent implements OnInit, OnDestroy {
+  categoryForm!: FormGroup;
+  category!: Category;
 
   private subs: Subscription = new Subscription();
 
   constructor(private fb: FormBuilder, private store: Store) {}
 
   resetForm() {
-    this.userForm = this.fb.group({
-      id: [this?.user?.id || null],
-      name: [this?.user?.name || '', Validators.required],
-      email: [this?.user?.email || '', [Validators.required, Validators.email]],
+    this.categoryForm = this.fb.group({
+      id: [this?.category?.id || null],
+      name: [this?.category?.name || '', Validators.required],
     });
   }
 
@@ -40,7 +39,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
       this.store
         .select(ModalState.editingElement)
         .subscribe((editingElement) => {
-          this.user = editingElement as User;
+          this.category = editingElement as Category;
           this.resetForm();
         })
     );
