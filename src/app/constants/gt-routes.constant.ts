@@ -7,5 +7,6 @@ export const GT_ROUTES = {
     LOGIN: 'login',
     USERS: 'users',
     CATEGORIES: 'categories',
+    PRODUCTS: 'products',
   },
 };

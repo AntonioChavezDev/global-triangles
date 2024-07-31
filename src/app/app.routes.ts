@@ -19,4 +19,11 @@ export const appRoutes: Route[] = [
         (mod) => mod.CategoriesComponent
       ),
   },
+  {
+    path: `${GT_ROUTES.ENDPOINTS.PRODUCTS}`,
+    loadComponent: () =>
+      import('./pages/products/products.component').then(
+        (mod) => mod.ProductsComponent
+      ),
+  },
 ];
