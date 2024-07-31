@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { Column } from './models/column.model';
 import { ButtonModule } from 'primeng/button';
+import { NestedPropertyPipe } from 'src/app/pipes/nested-property.pipe';
 
 @Component({
   selector: 'app-datagrid',
   templateUrl: './datagrid.component.html',
   styleUrls: ['./datagrid.component.scss'],
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule],
+  imports: [CommonModule, TableModule, ButtonModule, NestedPropertyPipe],
 })
 export class DatagridComponent {
   @Input() cols: Column<any>[] = [];
