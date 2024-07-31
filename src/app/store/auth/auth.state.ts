@@ -2,11 +2,10 @@ import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { Login, SetToken } from './auth.actions';
 import { delay, of } from 'rxjs';
+import { BaseStateModel } from '../models/base-state.model';
 
-export interface AuthStateModel {
+export interface AuthStateModel extends BaseStateModel {
   token: string | null;
-  loading: boolean;
-  error: string | null;
 }
 
 @State<AuthStateModel>({
@@ -40,13 +39,11 @@ export class AuthState implements NgxsOnInit {
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     ctx.patchState({ loading: true });
 
-    of()
+    of('fake-jwt-token')
       .pipe(delay(2000))
       .subscribe({
-        next: (token: any) => {
-          token = 'fake-jwt-token';
+        next: (token) => {
           ctx.dispatch(new SetToken(token));
-          ctx.patchState({ loading: false });
         },
         error: (err) => {
           ctx.patchState({
@@ -54,12 +51,15 @@ export class AuthState implements NgxsOnInit {
             error: 'Invalid username or password.',
           });
         },
+        complete: () => {
+          ctx.patchState({ loading: false });
+        },
       });
   }
 
   @Action(SetToken)
   setToken(ctx: StateContext<AuthStateModel>, action: SetToken) {
-    ctx.patchState({ token: action.token, error: null });
+    ctx.patchState({ token: action.token, loading: false, error: null });
     localStorage.setItem(this.authTokenKey, action.token);
   }
 

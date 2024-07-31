@@ -27,19 +27,22 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   loading = false;
   error: string | null = null;
 
-  loading$: Observable<boolean> = inject(Store).select(AuthState.loading);
-  error$: Observable<string | null> = inject(Store).select(AuthState.error);
+  loading$: Observable<boolean>;
+  error$: Observable<string | null>;
 
-  private subs: Subscription[] = [];
+  private subs: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(private fb: FormBuilder, private store: Store) {
+    this.loading$ = this.store.select(AuthState.loading);
+    this.error$ = this.store.select(AuthState.error);
+  }
 
   onSubmit(): void {
     if (this.loginForm.valid) {
@@ -54,17 +57,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ['', [Validators.required]],
     });
 
-    this.subs.push(
-      this.loading$.subscribe((loading) => (this.loading = loading)),
-      this.error$.subscribe((error) => (this.error = error))
+    this.subs.add(
+      this.loading$.subscribe((loading) => {
+        this.loading = loading;
+      })
     );
+    this.subs.add(this.error$.subscribe((error) => (this.error = error)));
   }
 
   ngOnDestroy(): void {
-    if (this.subs?.length > 0) {
-      for (const sub of this.subs) {
-        sub?.unsubscribe();
-      }
-    }
+    this.subs.unsubscribe();
   }
 }

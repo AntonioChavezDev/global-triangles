@@ -5,5 +5,6 @@ export const GT_ROUTES = {
   ENDPOINTS: {
     AUTH: 'auth',
     LOGIN: 'login',
+    USERS: 'users',
   },
 };
