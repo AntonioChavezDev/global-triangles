@@ -1,0 +1,24 @@
+<app-confirm-dialog></app-confirm-dialog>
+
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  header="{{ title }}"
+  [closable]="false"
+>
+  <ng-content></ng-content>
+
+  <p-footer>
+    <p-button
+      type="button"
+      [label]="cancelText"
+      severity="secondary"
+      (onClick)="onCancel()"
+    ></p-button>
+    <p-button
+      type="button"
+      [label]="confirmText"
+      (onClick)="save.emit()"
+    ></p-button>
+  </p-footer>
+</p-dialog>
