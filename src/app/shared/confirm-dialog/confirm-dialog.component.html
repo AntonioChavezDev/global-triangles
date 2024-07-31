@@ -1,0 +1,21 @@
+<p-dialog
+  [(visible)]="visible"
+  [header]="header"
+  [closable]="false"
+  [draggable]="false"
+>
+  <div class="p-d-flex p-ai-center p-mb-3">
+    <i [class]="icon" style="font-size: 2rem; color: var(--primary-color)"></i>
+    <span class="p-ml-2">{{ message }}</span>
+  </div>
+
+  <p-footer>
+    <p-button
+      type="button"
+      [label]="'No'"
+      severity="secondary"
+      (onClick)="onReject()"
+    ></p-button>
+    <p-button type="button" [label]="'Yes'" (onClick)="onConfirm()"></p-button>
+  </p-footer>
+</p-dialog>
