@@ -1,0 +1,12 @@
+@if(isEditMode$ | async){
+<app-confirm-dialog></app-confirm-dialog>
+<app-modal
+  title="Edit User"
+  [visible]="visible && !!(isEditMode$ | async)"
+  modal="modal"
+  (cancel)="onHide()"
+  (save)="onSubmit()"
+>
+  <app-user-form #userForm></app-user-form>
+</app-modal>
+}
