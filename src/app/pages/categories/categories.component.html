@@ -1,1 +1,10 @@
-<app-category-form></app-category-form>
+<app-datagrid
+  [data]="(categories$ | async) || []"
+  [cols]="columns"
+  [loading]="(loading$ | async) || false"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+>
+</app-datagrid>
+
+<app-confirm-dialog></app-confirm-dialog>
