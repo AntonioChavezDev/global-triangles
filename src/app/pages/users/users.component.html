@@ -1,0 +1,14 @@
+<app-create-user></app-create-user>
+
+<app-datagrid
+  [data]="(users$ | async) || []"
+  [cols]="columns"
+  [loading]="(loading$ | async) || false"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)"
+>
+</app-datagrid>
+
+<app-edit-user></app-edit-user>
+
+<app-confirm-dialog></app-confirm-dialog>
