@@ -1,0 +1,13 @@
+<p-button label="Add User" icon="pi pi-plus" (onClick)="onAdd()"></p-button>
+
+@if(visible && !(isEditMode$ | async)){
+<app-modal
+  title="Create User"
+  [visible]="visible"
+  modal="modal"
+  (cancel)="onHide()"
+  (save)="onSubmit()"
+>
+  <app-user-form #userForm></app-user-form>
+</app-modal>
+}
