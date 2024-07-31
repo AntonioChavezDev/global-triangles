@@ -1,41 +1,34 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Category } from 'src/app/pages/categories/models/category.model';
 import { Observable, of, Subscription } from 'rxjs';
+import { CategoryFormComponent } from '../category-form/category-form.component';
 import { Store } from '@ngxs/store';
-import { User } from 'src/app/pages/users/models/users.model';
-import { UpdateUser } from 'src/app/store/users/users.actions';
+import { ConfirmDialogService } from 'src/app/services/confirm-dialog.service';
 import {
   SetEditingElement,
   SetVisibility,
 } from 'src/app/store/modal/modal.actions';
+import { UpdateCategory } from 'src/app/store/categories/categories.actions';
 import { ModalState } from 'src/app/store/modal/modal.state';
-import { DialogModule } from 'primeng/dialog';
-import { UserFormComponent } from '../user-form/user-form.component';
-import { ModalComponent } from '../modal/modal.component';
-import { ConfirmDialogService } from 'src/app/services/confirm-dialog.service';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
+import { ModalComponent } from "../modal/modal.component";
 
 @Component({
-  selector: 'app-edit-user',
+  selector: 'app-edit-category',
   standalone: true,
-  imports: [
-    CommonModule,
-    DialogModule,
-    UserFormComponent,
-    ModalComponent,
-    ConfirmDialogComponent,
-  ],
-  templateUrl: './edit-user.component.html',
-  styleUrl: './edit-user.component.scss',
+  imports: [CommonModule, ConfirmDialogComponent, ModalComponent, CategoryFormComponent],
+  templateUrl: './edit-category.component.html',
+  styleUrl: './edit-category.component.scss',
 })
-export class EditUserComponent implements OnInit, OnDestroy {
+export class EditCategoryComponent implements OnInit, OnDestroy {
   visible: boolean = false;
-  editingUser!: User;
+  editingCategory!: Category;
   visible$: Observable<boolean> = of(false);
-  editingUser$: Observable<User> = of();
+  editingCategory$: Observable<Category> = of();
   isEditMode$: Observable<boolean> = of(false);
   private subs: Subscription = new Subscription();
-  @ViewChild('userForm') userForm!: UserFormComponent;
+  @ViewChild('categoryForm') categoryForm!: CategoryFormComponent;
 
   constructor(
     private store: Store,
@@ -48,30 +41,30 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.userForm.userForm.valid) {
+    if (this.categoryForm.categoryForm.valid) {
       this.confirmDialogService.confirm().subscribe((result: boolean) => {
         if (result) {
           this.store.dispatch(
-            new UpdateUser(this.userForm.userForm.value as User)
+            new UpdateCategory(this.categoryForm.categoryForm.value as Category)
           );
           this.onHide();
         }
       });
     }
-    this.userForm.userForm.markAllAsTouched();
+    this.categoryForm.categoryForm.markAllAsTouched();
   }
 
   ngOnInit(): void {
     this.visible$ = this.store.select(ModalState.visibility);
-    this.editingUser$ = this.store.select(ModalState.editingElement);
+    this.editingCategory$ = this.store.select(ModalState.editingElement);
     this.subs.add(
       this.visible$.subscribe((visible) => {
         this.visible = visible;
       })
     );
     this.subs.add(
-      this.editingUser$.subscribe((user) => {
-        this.editingUser = user;
+      this.editingCategory$.subscribe((category) => {
+        this.editingCategory = category;
       })
     );
     this.isEditMode$ = this.store.select(ModalState.isEditMode);

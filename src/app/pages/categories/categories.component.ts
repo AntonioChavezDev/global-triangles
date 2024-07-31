@@ -16,11 +16,12 @@ import {
 import { CategoriesState } from 'src/app/store/categories/categories.state';
 import { DatagridComponent } from '../../shared/datagrid/datagrid.component';
 import { ConfirmDialogComponent } from "../../shared/confirm-dialog/confirm-dialog.component";
+import { EditCategoryComponent } from "../../shared/edit-category/edit-category.component";
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, DatagridComponent, ConfirmDialogComponent],
+  imports: [CommonModule, DatagridComponent, ConfirmDialogComponent, EditCategoryComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
