@@ -1,0 +1,31 @@
+<form [formGroup]="productForm">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="description">Description</label>
+      <input id="description" pInputText formControlName="description" />
+    </div>
+
+    <div class="p-field">
+      <label for="price">Price</label>
+      <p-inputNumber
+        formControlName="price"
+        inputId="price"
+        mode="currency"
+        currency="USD"
+        locale="en-US"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="category">Category</label>
+      <p-dropdown
+        id="category"
+        formControlName="category"
+        [options]="(categories$ | async) || []"
+        optionLabel="name"
+        [loading]="loadingCategories$ | async"
+        placeholder="Select category"
+      />
+    </div>
+  </div>
+</form>

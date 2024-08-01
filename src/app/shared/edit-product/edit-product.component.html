@@ -1,0 +1,12 @@
+@if(isEditMode$ | async){
+<app-confirm-dialog></app-confirm-dialog>
+<app-modal
+  title="Edit Category"
+  [visible]="visible && !!(isEditMode$ | async)"
+  modal="modal"
+  (cancel)="onHide()"
+  (save)="onSubmit()"
+>
+  <app-product-form #productForm></app-product-form>
+</app-modal>
+}

@@ -15,12 +15,13 @@ import {
 } from 'src/app/store/products/products.actions';
 import { ProductsState } from 'src/app/store/products/products.state';
 import { DatagridComponent } from '../../shared/datagrid/datagrid.component';
-import { ConfirmDialogComponent } from "../../shared/confirm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { EditProductComponent } from "../../shared/edit-product/edit-product.component";
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, DatagridComponent, ConfirmDialogComponent],
+  imports: [CommonModule, DatagridComponent, ConfirmDialogComponent, EditProductComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -28,6 +29,7 @@ export class ProductsComponent implements OnInit {
   columns: Column<Product | any>[] = [
     { property: 'id', title: 'ID' },
     { property: 'description', title: 'Description' },
+    { property: 'price', title: 'Price', columnType: 'currency' },
     { property: 'category.name', title: 'Category' },
   ];
   products$: Observable<Product[]> = of([]);
