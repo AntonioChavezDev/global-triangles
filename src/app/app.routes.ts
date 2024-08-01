@@ -5,6 +5,11 @@ import { AuthGuard } from './guards/auth.guard';
 
 export const appRoutes: Route[] = [
   {
+    path: '',
+    redirectTo: `${GT_ROUTES.ENDPOINTS.USERS}`,
+    pathMatch: 'full',
+  },
+  {
     path: `${GT_ROUTES.ENDPOINTS.AUTH}`,
     loadChildren: () => authRoutes,
   },
