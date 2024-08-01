@@ -17,11 +17,12 @@ import { ProductsState } from 'src/app/store/products/products.state';
 import { DatagridComponent } from '../../shared/datagrid/datagrid.component';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { EditProductComponent } from "../../shared/edit-product/edit-product.component";
+import { CreateProductComponent } from "../../shared/create-product/create-product.component";
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, DatagridComponent, ConfirmDialogComponent, EditProductComponent],
+  imports: [CommonModule, DatagridComponent, ConfirmDialogComponent, EditProductComponent, CreateProductComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })

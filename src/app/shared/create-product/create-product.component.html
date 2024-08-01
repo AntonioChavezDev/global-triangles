@@ -1,0 +1,13 @@
+<p-button label="Add Product" icon="pi pi-plus" (onClick)="onAdd()"></p-button>
+
+@if(visible && !(isEditMode$ | async)){
+<app-modal
+  title="Create User"
+  [visible]="visible"
+  modal="modal"
+  (cancel)="onHide()"
+  (save)="onSubmit()"
+>
+  <app-product-form #productForm></app-product-form>
+</app-modal>
+}
