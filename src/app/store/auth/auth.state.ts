@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector, NgxsOnInit } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { Login, SetToken } from './auth.actions';
+import { Login, Logout, SetToken } from './auth.actions';
 import { delay, of } from 'rxjs';
 import { BaseStateModel } from '../models/base-state.model';
 
@@ -19,6 +19,11 @@ export interface AuthStateModel extends BaseStateModel {
 @Injectable()
 export class AuthState implements NgxsOnInit {
   private authTokenKey = 'authToken';
+
+  @Selector()
+  static isLoggedIn(state: AuthStateModel): boolean {
+    return state?.token != null || false;
+  }
 
   @Selector()
   static token(state: AuthStateModel): string | null {
@@ -49,6 +54,29 @@ export class AuthState implements NgxsOnInit {
           ctx.patchState({
             loading: false,
             error: 'Invalid username or password.',
+          });
+        },
+        complete: () => {
+          ctx.patchState({ loading: false });
+        },
+      });
+  }
+
+  @Action(Logout)
+  logout(ctx: StateContext<AuthStateModel>) {
+    ctx.patchState({ loading: true });
+
+    of('logout')
+      .pipe(delay(100))
+      .subscribe({
+        next: () => {
+          ctx.patchState({ token: null, loading: false, error: null });
+          localStorage.removeItem(this.authTokenKey);
+        },
+        error: (err) => {
+          ctx.patchState({
+            loading: false,
+            error: 'Error trying to logout.',
           });
         },
         complete: () => {

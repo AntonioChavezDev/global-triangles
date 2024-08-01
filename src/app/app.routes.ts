@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { authRoutes } from './pages/auth/auth.routes';
 import { GT_ROUTES } from './constants/gt-routes.constant';
+import { AuthGuard } from './guards/auth.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -11,6 +12,7 @@ export const appRoutes: Route[] = [
     path: `${GT_ROUTES.ENDPOINTS.USERS}`,
     loadComponent: () =>
       import('./pages/users/users.component').then((mod) => mod.UsersComponent),
+    canActivate: [AuthGuard],
   },
   {
     path: `${GT_ROUTES.ENDPOINTS.CATEGORIES}`,
@@ -18,6 +20,7 @@ export const appRoutes: Route[] = [
       import('./pages/categories/categories.component').then(
         (mod) => mod.CategoriesComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: `${GT_ROUTES.ENDPOINTS.PRODUCTS}`,
@@ -25,5 +28,6 @@ export const appRoutes: Route[] = [
       import('./pages/products/products.component').then(
         (mod) => mod.ProductsComponent
       ),
+    canActivate: [AuthGuard],
   },
 ];
