@@ -17,7 +17,11 @@
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
       <td *ngFor="let col of columns">
-        {{ rowData | nestedProperty: col.property }}
+        @if(col?.columnType === 'currency'){
+        {{ rowData | nestedProperty : col.property | currency : 'USD' }}
+        } @else {
+        {{ rowData | nestedProperty : col.property }}
+        }
       </td>
 
       <td>

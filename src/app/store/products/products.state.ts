@@ -51,6 +51,7 @@ export class ProductsState {
           for (let i = 1; i <= 5; i++) {
             products.push({
               id: i,
+              price: i * 100,
               description: `Product Description ${i}`,
               category: {
                 id: i,
